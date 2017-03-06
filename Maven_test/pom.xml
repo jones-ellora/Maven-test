@@ -3,6 +3,13 @@
   <groupId>Maven_test</groupId>
   <artifactId>Maven_test</artifactId>
   <version>0.0.1-SNAPSHOT</version>
+  <profiles>
+  <profile>
+      <id>Maven_test</id>
+      <activation>
+      </activation>
+    </profile>
+  </profiles>
   <build>
     <sourceDirectory>src</sourceDirectory>
     <plugins>

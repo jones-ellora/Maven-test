@@ -1,0 +1,31 @@
+{
+	"organizationID": 1,
+	"substanceID": 106,
+	"substanceName": "Bandages",
+	"category": "Material",
+	"subType": [{
+		"size": 1,
+		"quantity": 94,
+		"rol": 20,
+		"type": "Small",
+		"color": "Brown",
+		"sizekey": "106-1",
+		"expiryDate": "2058-01-05"
+	}, {
+		"size": 2,
+		"quantity": 546,
+		"rol": 20,
+		"type": "Medium",
+		"color": "Brown",
+		"sizekey": "106-2",
+		"expiryDate": "2058-01-05"
+	}, {
+		"size": 3,
+		"quantity": 554,
+		"rol": 20,
+		"type": "Large",
+		"color": "Brown",
+		"sizekey": "106-3",
+		"expiryDate": "2058-01-05"
+	}]
+}

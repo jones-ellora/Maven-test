@@ -1,0 +1,33 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!-- ResultMap provides result structure of the queries. Allow us to perform 
+ various operations like SELECT , UPDATE on Substance table in database Using 
+ SELECT and UPDATE tag we can specify result type and parameter type Inside 
+ the SELECT tag we can specify SELECT queries and same for UPDATE -->
+<!DOCTYPE mapper
+  PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+  "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="SubstanceMapper">
+
+
+ <resultMap id="SubstanceResult" type="systems.ellora.core.api.inventory.Substance">
+  <result property="organizationId" column="organizationId" />
+  <result property="substanceId" column="substanceId" />
+  <result property="substanceName" column="substanceName" />
+  <result property="category" column="category" />
+ </resultMap>
+
+
+ <select id="selectSubstance" resultType="systems.ellora.core.api.inventory.Substance"
+  parameterType="int" resultMap="SubstanceResult">
+  SELECT * FROM Substance WHERE organizationId = #{organizationId}
+ </select>
+
+
+ <select id="selectSubstanceById" resultType="systems.ellora.core.api.inventory.Substance"
+  parameterType="systems.ellora.core.api.Substance" resultMap="SubstanceResult">
+  SELECT * FROM Substance WHERE organizationId = #{organizationId} AND
+  substanceId= #{substanceId}
+ </select>
+
+
+</mapper> 

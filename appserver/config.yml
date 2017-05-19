@@ -1,0 +1,33 @@
+
+
+
+logging:
+  level: DEBUG
+  loggers:
+    io.dropwizard: DEBUG
+    systems.ellora.core.resources: DEBUG
+    systems.ellora.core.service: 
+      level: DEBUG
+      appenders:
+           - type: file
+             archive: true
+             timeZone: UTC
+             currentLogFilename: /ext/logs/app.log
+             archivedLogFilenamePattern: /ext/logs/app-%d.log.gz
+             archivedFileCount: 50
+             logFormat: "%d{HH:mm:ss.SSS} [%thread] %-5level %logger{36} - %msg%n"
+    systems.ellora.core.AppServerApplication:
+      level: DEBUG
+      appenders:
+           - type: file
+             archive: true
+             timeZone: UTC
+             currentLogFilename: /ext/logs/perf.log
+             archivedLogFilenamePattern: /ext/logs/perf-%d.log.gz
+             archivedFileCount: 50
+             logFormat: "%d{HH:mm:ss.SSS} [%thread] %-5level %logger{36} - %msg%n"
+  
+              
+  appenders:
+   - type: console
+     logFormat: "%d{HH:mm:ss.SSS} [%thread] %-5level %logger{36} - %msg%n"

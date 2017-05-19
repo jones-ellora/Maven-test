@@ -1,0 +1,10 @@
+systems.ellora.core.api.appointment
+systems.ellora.core.api.attendance
+systems.ellora.core.api.doctor
+systems.ellora.core.api.inventory
+systems.ellora.core
+systems.ellora.core.health.inventory
+systems.ellora.core.health
+systems.ellora.core.resources
+systems.ellora.core.service.appointment
+systems.ellora.core.service.inventory

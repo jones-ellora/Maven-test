@@ -1,0 +1,169 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!-- ResultMap provides result structure of the queries. Allow us to perform 
+ various operations like SELECT , UPDATE on Size table in database Using SELECT 
+ and UPDATE tag we can specify result type and parameter type Inside the SELECT 
+ tag we can specify SELECT queries and same for UPDATE -->
+<!DOCTYPE mapper
+  PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+  "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="CalendarMapper">
+
+ <resultMap id="CalendarResult" type="systems.ellora.core.api.appointment.Calendar">
+  <id property = "calendarId" column="calendarId"/>
+  <result property="calendarOrder" column="calendarOrder" />
+  <result property="calendarType" column="calendarType" />
+  <result property="name" column="name" />
+  <result property="organizationId" column="organizationId" />
+  <result property="organizationName" column="organizationName" />
+  <result property="facilityId" column="facilityId" />
+  <result property="facilityName" column="facilityName" />
+  <result property="locationId" column="locationId" />
+  <result property="locationName" column="locationName" />
+  <result property="doctorId" column="doctorId" />
+  <result property="doctorName" column="doctorName" />
+  
+  <collection property="lisOfAppointments" column="calendarOrder" ofType="systems.ellora.core.api.appointment.Appointment">
+      <id property="appointmentId" column="appointmentId" />
+      <id property="doctorId" column="doctorId" />
+      <id property="calendarOrder" column="calendarOrder" />
+      <result property="slotId" column="slotId" />
+      <result property="type" column="type" />
+      <result property="reason" column="reason" />
+      <result property="priority" column="priority" />
+      <result property="description" column="description" />
+      <result property="startTime" column="startTime" />
+      <result property="endTime" column="endTime" />
+      <result property="created" column="created" />
+      <result property="referral" column="referral" />
+      <result property="duration" column="duration" />
+      <result property="status" column="status" />
+      <result property="alert" column="alert" /> 
+      
+      <collection property="lisOfParticipants" ofType="systems.ellora.core.api.appointment.Participant" column = "appointmentId">
+          <id property="participantId" column="participantId" />
+          <id property="appointmentId" column="appointmentId" />          
+          <result property="number" column="number" />
+          <result property="name" column="name" />
+          <result property="role" column="role" />
+          <result property="purpose" column="purpose" />   
+      </collection>   
+       
+  </collection>
+  
+ </resultMap>
+ 
+ <resultMap id="AppointmentResult" type="systems.ellora.core.api.appointment.Appointment"> 
+      <id property="appointmentId" column="appointmentId" />
+      <id property="doctorId" column="doctorId" />
+      <id property="calendarOrder" column="calendarOrder" />
+      <result property="slotId" column="slotId" />
+      <result property="type" column="type" />
+      <result property="reason" column="reason" />
+      <result property="priority" column="priority" />
+      <result property="description" column="description" />
+      <result property="startTime" column="startTime" />
+      <result property="endTime" column="endTime" />
+      <result property="created" column="created" />
+      <result property="referral" column="referral" />
+      <result property="duration" column="duration" />
+      <result property="status" column="status" />
+      <result property="alert" column="alert" />  
+ </resultMap>
+ 
+ 
+ <select id="selectAllByDoctorId" parameterType="int" resultMap="CalendarResult">
+  SELECT
+  
+      cal.calendarId, cal.calendarOrder, cal.calendarType, cal.name, cal.organizationId, cal.organizationName, cal.facilityId, cal.facilityName, cal.locationId,
+      
+      cal.locationName, cal.doctorId, cal.doctorName,
+      
+      apt.appointmentId, apt.doctorId, apt.calendarOrder,
+      
+      apt.slotId, apt.type, apt.reason, apt.priority, apt.description, apt.startTime, apt.endTime, apt.created, apt.referral, apt.duration, apt.status, apt.alert,
+      
+      part.participantId, part.appointmentId, part.number, part.name, part.role, part.purpose
+              
+      FROM calendar cal, appointment apt, participant part
+      
+      WHERE cal.doctorId = #{doctorID} AND cal.calendarOrder = apt.calendarOrder AND apt.appointmentId = part.appointmentId;
+      
+ </select>
+ 
+ 
+  <select id="selectAllByDoctorIdWithMonth" parameterType="hashmap" resultMap="CalendarResult">
+  SELECT
+  
+      cal.calendarId, cal.calendarOrder, cal.calendarType, cal.name, cal.organizationId, cal.organizationName, cal.facilityId, cal.facilityName, cal.locationId,
+      
+      cal.locationName, cal.doctorId, cal.doctorName,
+      
+      apt.appointmentId, apt.doctorId, apt.calendarOrder,
+      
+      apt.slotId, apt.type, apt.reason, apt.priority, apt.description, apt.startTime, apt.endTime, apt.created, apt.referral, apt.duration, apt.status, apt.alert,
+      
+      part.participantId, part.appointmentId, part.number, part.name, part.role, part.purpose
+              
+      FROM calendar cal, appointment apt, participant part
+      
+      WHERE cal.doctorId = #{doctorId} AND cal.calendarOrder = apt.calendarOrder AND apt.appointmentId = part.appointmentId AND substring(apt.startTime,1,7) = #{month};
+      
+ </select>
+ 
+ <select id="selectAllByDoctorIdWithDates" parameterType="hashmap" resultMap="CalendarResult">
+  SELECT
+  
+      cal.calendarId, cal.calendarOrder, cal.calendarType, cal.name, cal.organizationId, cal.organizationName, cal.facilityId, cal.facilityName, cal.locationId,
+      
+      cal.locationName, cal.doctorId, cal.doctorName,
+      
+      apt.appointmentId, apt.doctorId, apt.calendarOrder,
+      
+      apt.slotId, apt.type, apt.reason, apt.priority, apt.description, apt.startTime, apt.endTime, apt.created, apt.referral, apt.duration, apt.status, apt.alert,
+      
+      part.participantId, part.appointmentId, part.number, part.name, part.role, part.purpose
+              
+      FROM calendar cal, appointment apt, participant part
+      
+      WHERE cal.doctorId = #{doctorId} AND cal.calendarOrder = apt.calendarOrder AND apt.appointmentId = part.appointmentId AND substring(apt.startTime,1,10) BETWEEN #{fromDate} AND #{toDate};
+      
+ </select>
+ 
+ <select id="selectAllByDoctorIdWithDate" parameterType="hashmap" resultMap="CalendarResult">
+  SELECT
+  
+      cal.calendarId, cal.calendarOrder, cal.calendarType, cal.name, cal.organizationId, cal.organizationName, cal.facilityId, cal.facilityName, cal.locationId,
+      
+      cal.locationName, cal.doctorId, cal.doctorName,
+      
+      apt.appointmentId, apt.doctorId, apt.calendarOrder,
+      
+      apt.slotId, apt.type, apt.reason, apt.priority, apt.description, apt.startTime, apt.endTime, apt.created, apt.referral, apt.duration, apt.status, apt.alert,
+      
+      part.participantId, part.appointmentId, part.number, part.name, part.role, part.purpose
+              
+      FROM calendar cal, appointment apt, participant part
+      
+      WHERE cal.doctorId = #{doctorId} AND cal.calendarOrder = apt.calendarOrder AND apt.appointmentId = part.appointmentId AND substring(apt.startTime,1,10) = #{date};
+      
+ </select>
+ 
+ <select id="getStartTime" parameterType="hashmap" resultMap="AppointmentResult">
+    SELECT 
+         
+         apt.appointmentId, apt.doctorId, apt.calendarOrder,
+      
+         apt.slotId, apt.type, apt.reason, apt.priority, apt.description, apt.startTime, apt.endTime, apt.created, apt.referral, apt.duration, apt.status, apt.alert
+      
+         FROM appointment apt WHERE substring(apt.startTime,1,10) = #{fromDate} AND apt.calendarOrder = #{calendarOrder} AND apt.doctorId = #{doctorId};
+ </select>
+ 
+ 
+ <update id="postponeDate" parameterType="hashmap">
+    UPDATE
+        
+          appointment SET status = #{status}, alert = #{alert}, startTime = #{startTime}, endTime = #{endTime} WHERE doctorId = #{doctorId} AND substring(startTime,1,10) = #{fromDate} AND calendarOrder = #{calendarOrder};
+ </update>
+ 
+ </mapper> 

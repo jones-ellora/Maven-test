@@ -1,0 +1,52 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!-- Provided type alias for Size POJO class. Created JDBC Connection with 
+ Pooled Data Source. Allow us to choose database along with user credentials. 
+ Added Mapper resource that contains queries to perform CRUD operations -->
+<!DOCTYPE configuration
+  PUBLIC "-//mybatis.org//DTD Config 3.0//EN"
+  "http://mybatis.org/dtd/mybatis-3-config.dtd">
+
+<configuration>
+
+ <typeAliases>
+  <typeAlias type="systems.ellora.core.api.appointment.Appointment"
+   alias="Appointment" />
+   
+   <typeAlias type="systems.ellora.core.api.appointment.Calendar"
+   alias="Calendar" />
+   
+   <typeAlias type="systems.ellora.core.api.appointment.Participant"
+   alias="Participant" />
+   
+   <typeAlias type="systems.ellora.core.api.inventory.Size"
+   alias="size" />
+   
+   <typeAlias type="systems.ellora.core.api.inventory.Substance"
+   alias="systems.ellora.core.api.Substance" />
+   
+ </typeAliases>
+
+ <environments default="development">
+
+  <environment id="development">
+  
+   <transactionManager type="JDBC" />
+   
+   <dataSource type="systems.ellora.core.C3P0DataSourceFactory">
+        <property name="driver" value="com.mysql.cj.jdbc.Driver"/>
+        <property name="url" value="jdbc:mysql://localhost:3306/curie"/>
+        <property name="user" value="root"/>
+        <property name="password" value="root"/>
+  </dataSource>
+   
+  </environment>
+
+ </environments>
+
+ <mappers>
+  <mapper resource="CalendarMapper.xml" />
+   <mapper resource="SizeMapper.xml" />
+   <mapper resource="SubstanceMapper.xml" />
+ </mappers>
+
+</configuration>

@@ -1,0 +1,42 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!-- ResultMap provides result structure of the queries. Allow us to perform 
+ various operations like SELECT , UPDATE on Size table in database Using SELECT 
+ and UPDATE tag we can specify result type and parameter type Inside the SELECT 
+ tag we can specify SELECT queries and same for UPDATE -->
+<!DOCTYPE mapper
+  PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+  "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="SizeMapper">
+
+ <resultMap id="SizeResult" type="systems.ellora.core.api.inventory.Size">
+  <result property="substanceId" column="substanceId" />
+  <result property="size" column="size" />
+  <result property="type" column="type" />
+  <result property="color" column="color" />
+  <result property="rol" column="rol" />
+  <result property="expiryDate" column="expiryDate" />
+  <result property="organizationId" column="organizationId" />
+ </resultMap>
+
+
+ <select id="selectSize" resultType="systems.ellora.core.api.inventory.Size"
+  parameterType="int" resultMap="SizeResult">
+  SELECT * FROM substancesize WHERE organizationId=#{organizationId}
+ </select>
+
+
+ <select id="selectSizeById" resultType="systems.ellora.core.api.inventory.Size"
+  parameterType="systems.ellora.core.api.inventory.Substance" resultMap="SizeResult">
+  SELECT * FROM substancesize WHERE organizationId=#{organizationId} AND
+  substanceId= #{substanceId}
+ </select>
+
+
+ <update id="updateSize" parameterType="systems.ellora.core.api.inventory.Size">
+  UPDATE substancesize SET quantity = #{quantity}, rol = #{rol}, color=
+  #{color} where organizationId=#{organizationId} AND substanceId =
+  #{substanceId} AND sizekey = #{sizekey}
+ </update>
+
+</mapper> 
